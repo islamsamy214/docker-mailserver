@@ -1,0 +1,33 @@
+version: "3.3"
+
+services:
+  mailserver:
+    image: mailserver/docker-mailserver
+    container_name: mailserver
+    hostname: mailserver
+    domainname: docker.local
+    ports:
+      - "25:25"
+      - "465:465"
+      - "2525:2525"
+      - "143:143"
+      - "587:587"
+      - "993:993"
+    environment:
+      - ENABLE_SPAMASSASSIN=1
+      - SPAMASSASSIN_SPAM_TO_INBOX=1
+      - ENABLE_CLAMAV=1
+      - ENABLE_POSTGREY=1
+      - ENABLE_FAIL2BAN=0
+      - ENABLE_SASLAUTHD=0
+      - ONE_DIR=1
+      - TZ=America/New_York
+      - MAIL_USER=eslamsamy@docker.local
+      - MAIL_PASS=supersecret
+    volumes:
+      - ~/docker/mailserver/data/:/var/mail/
+      - ~/docker/mailserver/state/:/var/mail-state/
+      - ~/docker/mailserver/logs/:/var/log/mail/
+      - ~/docker/mailserver/config/:/tmp/docker-mailserver/
+    # command: 'echo "$MAIL_USER|$(doveadm pw -s SHA512-CRYPT -u $MAIL_USER -p $MAIL_PASS)" >> ~/docker/mailserver/config/postfix-accounts.cf'
+    restart: unless-stopped
