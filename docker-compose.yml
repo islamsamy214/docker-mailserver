@@ -22,14 +22,11 @@ services:
       - ENABLE_SASLAUTHD=0
       - ONE_DIR=1
       - TZ=America/New_York
-      - MAIL_USER=eslamsamy@docker.local
-      - MAIL_PASS=supersecret
     volumes:
       - ~/docker/mailserver/data/:/var/mail/
       - ~/docker/mailserver/state/:/var/mail-state/
       - ~/docker/mailserver/logs/:/var/log/mail/
       - ~/docker/mailserver/config/:/tmp/docker-mailserver/
-    # command: 'echo "$MAIL_USER|$(doveadm pw -s SHA512-CRYPT -u $MAIL_USER -p $MAIL_PASS)" >> ~/docker/mailserver/config/postfix-accounts.cf'
     restart: unless-stopped
     networks:
       - mailserver
