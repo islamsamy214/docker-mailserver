@@ -31,3 +31,9 @@ services:
       - ~/docker/mailserver/config/:/tmp/docker-mailserver/
     # command: 'echo "$MAIL_USER|$(doveadm pw -s SHA512-CRYPT -u $MAIL_USER -p $MAIL_PASS)" >> ~/docker/mailserver/config/postfix-accounts.cf'
     restart: unless-stopped
+    networks:
+      - mailserver
+
+networks:
+  mailserver:
+    driver: bridge
